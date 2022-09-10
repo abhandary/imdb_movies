@@ -9,7 +9,7 @@ import Foundation
 
 private let TAG = "DataStore"
 
-final class DataStore: DataStoreProtocol {
+final class MovieDataStore: MovieDataStoreProtocol {
   
   static private let storedSearchResultsLimit = 100
   
@@ -27,6 +27,7 @@ final class DataStore: DataStoreProtocol {
     guard let fileURL = getFileURL(usingSearchString: searchString) else {
       Log.error(TAG, "error: unable to get file URL")
       completion(.failure(.fileURLCreationError))
+      return
     }
     
     do {
@@ -39,11 +40,12 @@ final class DataStore: DataStoreProtocol {
       let savedResponse
       = try decoder.decode(Response.self, from: savedData)
       Log.verbose(TAG, "got saved movies")
-      return savedResponse.movies
+      completion(.success(savedResponse.movies))
+      return
     } catch {
       Log.error(TAG, "Couldn't read file. - \(error)")
+      completion(.failure(.fileReadError))
     }
-    return nil
   }
   
   func write(response: Response, usingSearchString searchString: String) async {
@@ -65,7 +67,7 @@ final class DataStore: DataStoreProtocol {
   }
   
   private func getFileURL(usingSearchString searchString: String) -> URL? {
-    let fileURLs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+    let fileURLs = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
     guard fileURLs.count > 0 else {
       return nil
     }
@@ -74,15 +76,16 @@ final class DataStore: DataStoreProtocol {
   }
   
   private func deleteOldFiles() {
-    let fileURLs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+    let fileURLs = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
     guard fileURLs.count > 0 else {
       return
     }
     guard let directoryURL = fileURLs.first else { return }
     do {
-      let directoryContents = try FileManager.default.contentsOfDirectory(
+      let directoryContents = try fileManager.contentsOfDirectory(
         at: directoryURL,
-        includingPropertiesForKeys: [.creationDateKey]
+        includingPropertiesForKeys: [.creationDateKey],
+        options: .skipsHiddenFiles
       )
       
       for url in directoryContents {
@@ -104,9 +107,9 @@ final class DataStore: DataStoreProtocol {
         return false
       }
 
-      while sortedDirectoryContents.count > DataStore.storedSearchResultsLimit {
+      while sortedDirectoryContents.count > MovieDataStore.storedSearchResultsLimit {
         let removed = sortedDirectoryContents.removeLast()
-        try FileManager.default.removeItem(at: removed)
+        try fileManager.removeItem(at: removed)
       }
     } catch {
       Log.error(TAG, error)

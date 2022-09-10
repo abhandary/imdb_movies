@@ -10,6 +10,7 @@ import Foundation
 enum MovieDataStoreError : Error {
   case fileURLCreationError
   case noStoredData
+  case fileReadError
 }
 
 typealias MovieDataStoreResultCompletion = (Result<[Movie], MovieDataStoreError>) -> Void

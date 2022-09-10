@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import ReqRes
+@testable import IMDBMovies
 
 class IMDBMoviesTests: XCTestCase {
 
