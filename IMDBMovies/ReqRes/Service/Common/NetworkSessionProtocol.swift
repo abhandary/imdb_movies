@@ -29,6 +29,7 @@ public typealias NetworkCompletion = (Result<Data, NetworkError>) -> Void
 
 public protocol NetworkSessionProtocol {
   func loadData(from endPoint: EndPoint, completion: NetworkCompletion?)
+  func loadData(from endPoint: EndPoint, params: String, completion: NetworkCompletion?)
   func loadData(from urlRequest: URLRequest, completion: NetworkCompletion?)
 }
 
@@ -36,6 +37,17 @@ extension URLSession : NetworkSessionProtocol {
   public func loadData(from endPoint: EndPoint, completion: NetworkCompletion?) {
     
     guard let request = endPoint.request else {
+      Log.error("nil request in end point")
+      completion?(.failure(NetworkError.genericNetworkError))
+      return
+    }
+    
+    loadData(from: request, completion: completion)
+  }
+  
+  public func loadData(from endPoint: EndPoint, params: String, completion: NetworkCompletion?) {
+    
+    guard let request = endPoint.request(withParams: params) else {
       Log.error("nil request in end point")
       completion?(.failure(NetworkError.genericNetworkError))
       return

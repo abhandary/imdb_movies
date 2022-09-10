@@ -10,4 +10,5 @@ import Foundation
 public protocol EndPoint {
   var path: String { get }
   var request: URLRequest? { get }
+  func request(withParams params: String) -> URLRequest?
 }

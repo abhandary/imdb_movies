@@ -25,7 +25,7 @@ final class MovieDataFetcher : MovieDataFetcherProtocol {
 
 extension MovieDataFetcher {
   func fetchMovies(usingSearchString searchString: String, completion: @escaping MovieDataFetchResultCompletion) {
-    self.session.loadData(from: api) { [weak self] result in
+    self.session.loadData(from: api, params: searchString) { [weak self] result in
       guard let self = self else {
         Log.error("self is nil")
         return
