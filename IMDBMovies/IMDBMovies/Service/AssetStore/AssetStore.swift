@@ -12,7 +12,12 @@ private let TAG = "AssetStore"
 
 struct AssetStore {
 
-  var imageCache = NSCache<NSString, NSData>()
+  let imageCache = NSCache<NSString, NSData>()
+  let session: NetworkSessionProtocol
+  
+  init(session: NetworkSessionProtocol = URLSession.shared) {
+    self.session = session
+  }
   
   func fetchAsset(url: URL?) -> Asset {
     guard let url = url else {
@@ -35,18 +40,16 @@ struct AssetStore {
     if let cachedAsset = imageCache.object(forKey: url.path as NSString) {
       completionHandler(Asset(url: url, state: .downloaded, data: cachedAsset as Data))
     } else {
-      URLSession.shared.dataTask(with: url) { (data, response, error) in
-        if let error = error {
+      self.session.loadData(from: URLRequest(url: url)) { result in
+        switch (result) {
+        case .failure(let error):
           Log.error(TAG, error)
-        }
-        guard let data = data else {
-          Log.error(TAG, "no data fetched")
           return
+        case .success(let data):
+          imageCache.setObject(data as NSData, forKey: url.path as NSString)
+          completionHandler(Asset(url: url, state: .downloaded, data: data))
         }
-        
-        imageCache.setObject(data as NSData, forKey: url.path as NSString)
-        completionHandler(Asset(url: url, state: .downloaded, data: data))
-      }.resume()
+      }
     }
   }
 }

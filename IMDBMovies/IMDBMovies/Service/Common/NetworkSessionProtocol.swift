@@ -29,6 +29,7 @@ public typealias NetworkCompletion = (Result<Data, NetworkError>) -> Void
 
 public protocol NetworkSessionProtocol {
   func loadData(from endPoint: EndPoint, completion: NetworkCompletion?)
+  func loadData(from urlRequest: URLRequest, completion: NetworkCompletion?)
 }
 
 extension URLSession : NetworkSessionProtocol {
@@ -43,7 +44,7 @@ extension URLSession : NetworkSessionProtocol {
     loadData(from: request, completion: completion)
   }
   
-  private func loadData(from urlRequest: URLRequest, completion: NetworkCompletion?) {
+  func loadData(from urlRequest: URLRequest, completion: NetworkCompletion?) {
     self.dataTask(with: urlRequest) { data, urlResponse, error in
       if let error = error {
         Log.error("got a network error - \(error)")
