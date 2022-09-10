@@ -44,8 +44,8 @@ extension MovieDataFetcher {
     }
   }
   
-  private func decodeMovie(data: Data) -> Response? {
-    return self.decoder.decode(type: Response.self, from: data)
+  private func decodeMovie(data: Data) -> MovieResponse? {
+    return self.decoder.decode(type: MovieResponse.self, from: data)
   }
 }
 

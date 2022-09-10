@@ -17,5 +17,5 @@ typealias MovieDataStoreResultCompletion = (Result<[Movie], MovieDataStoreError>
 
 protocol MovieDataStoreProtocol {
   func fetchMovies(usingSearchString searchString: String, completion: @escaping MovieDataStoreResultCompletion)
-  func write(response: Response, usingSearchString searchString: String) async
+  func write(response: MovieResponse, usingSearchString searchString: String) async
 }

@@ -38,7 +38,7 @@ final class MovieDataStore: MovieDataStoreProtocol {
       }
       let savedData = try Data(contentsOf: fileURL)
       let savedResponse
-      = try decoder.decode(Response.self, from: savedData)
+      = try decoder.decode(MovieResponse.self, from: savedData)
       Log.verbose(TAG, "got saved movies")
       completion(.success(savedResponse.movies))
       return
@@ -48,7 +48,7 @@ final class MovieDataStore: MovieDataStoreProtocol {
     }
   }
   
-  func write(response: Response, usingSearchString searchString: String) async {
+  func write(response: MovieResponse, usingSearchString searchString: String) async {
     
     guard let fileURL = getFileURL(usingSearchString: searchString) else {
       Log.error(TAG, "error: unable to get file URL")

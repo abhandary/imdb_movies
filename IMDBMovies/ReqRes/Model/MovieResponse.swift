@@ -1,5 +1,5 @@
 //
-//  ReqResResponse.swift
+//  MovieResponse.swift
 //  IMDB Movies
 //
 //  Created by Akshay Bhandary on 7/1/22.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Response: Codable, Sendable {
+struct MovieResponse: Codable, Sendable {
     let searchType, expression: String
     let movies: [Movie]
     let errorMessage: String
