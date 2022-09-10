@@ -40,6 +40,7 @@
 		4EBFE93028CC68D500FDCFDA /* JSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBFE92F28CC68D500FDCFDA /* JSONDecodable.swift */; };
 		4EBFE93228CC693000FDCFDA /* URLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBFE93128CC693000FDCFDA /* URLSession.swift */; };
 		4EBFE93428CC69AC00FDCFDA /* MovieDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBFE93328CC69AC00FDCFDA /* MovieDecoder.swift */; };
+		4EBFE93728CC6ED700FDCFDA /* FileManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBFE93628CC6ED700FDCFDA /* FileManagerProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +98,7 @@
 		4EBFE92F28CC68D500FDCFDA /* JSONDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecodable.swift; sourceTree = "<group>"; };
 		4EBFE93128CC693000FDCFDA /* URLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSession.swift; sourceTree = "<group>"; };
 		4EBFE93328CC69AC00FDCFDA /* MovieDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDecoder.swift; sourceTree = "<group>"; };
+		4EBFE93628CC6ED700FDCFDA /* FileManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,14 +212,13 @@
 		4E61AB73286F814F00C24248 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				4EBFE93528CC6E6500FDCFDA /* DataStore */,
 				4EBFE92A28CC679E00FDCFDA /* DataFetcher */,
 				4EBFE92528CC667E00FDCFDA /* Repository */,
 				4EBFE91E28CC653F00FDCFDA /* Common */,
 				4E61AB872871319000C24248 /* AssetStore */,
-				4E61AB70286F7F8500C24248 /* DataStore.swift */,
 				4E61AB74286F817F00C24248 /* NetworkLoader.swift */,
 				4E61AB7A286F866500C24248 /* NetworkLoaderProtocol.swift */,
-				4E61AB7C286F870C00C24248 /* DataStoreProtocol.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -248,6 +249,7 @@
 				4EBFE92328CC661100FDCFDA /* EndPoint.swift */,
 				4EBFE92F28CC68D500FDCFDA /* JSONDecodable.swift */,
 				4EBFE93128CC693000FDCFDA /* URLSession.swift */,
+				4EBFE93628CC6ED700FDCFDA /* FileManagerProtocol.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -269,6 +271,15 @@
 				4EBFE93328CC69AC00FDCFDA /* MovieDecoder.swift */,
 			);
 			path = DataFetcher;
+			sourceTree = "<group>";
+		};
+		4EBFE93528CC6E6500FDCFDA /* DataStore */ = {
+			isa = PBXGroup;
+			children = (
+				4E61AB7C286F870C00C24248 /* DataStoreProtocol.swift */,
+				4E61AB70286F7F8500C24248 /* DataStore.swift */,
+			);
+			path = DataStore;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -409,6 +420,7 @@
 				4E61AB9128728EEC00C24248 /* MoviesTableSection.swift in Sources */,
 				4E61AB3B286F756700C24248 /* MoviesTableViewController.swift in Sources */,
 				4EBFE93428CC69AC00FDCFDA /* MovieDecoder.swift in Sources */,
+				4EBFE93728CC6ED700FDCFDA /* FileManagerProtocol.swift in Sources */,
 				4EBFE93028CC68D500FDCFDA /* JSONDecodable.swift in Sources */,
 				4E61AB892871358F00C24248 /* Asset.swift in Sources */,
 				4E61AB37286F756700C24248 /* AppDelegate.swift in Sources */,

@@ -32,20 +32,20 @@ extension MovieDataFetcher {
       }
       switch (result) {
       case .success(let data):
-        if let paywall = self.decodePaywall(data: data) {
-          completion(.success(paywall))
+        if let response = self.decodeMovie(data: data) {
+          completion(.success(response))
         } else {
           completion(.failure(.decodingError))
         }
       case .failure(let error):
-        Log.error("fetchPaywall: got an error - \(error)")
+        Log.error(TAG, "fetchMovies: got an error - \(error)")
         completion(.failure(.networkError))
       }
     }
   }
   
-  private func decodePaywall(data: Data) -> Movie? {
-    return self.decoder.decode(type: Movie.self, from: data)
+  private func decodeMovie(data: Data) -> Response? {
+    return self.decoder.decode(type: Response.self, from: data)
   }
 }
 

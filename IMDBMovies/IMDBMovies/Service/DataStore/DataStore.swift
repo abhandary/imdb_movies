@@ -9,28 +9,31 @@ import Foundation
 
 private let TAG = "DataStore"
 
-struct DataStore: DataStoreProtocol {
+final class DataStore: DataStoreProtocol {
   
   static private let storedSearchResultsLimit = 100
   
   let encoder = PropertyListEncoder()
   let decoder = PropertyListDecoder()
+  let fileManager: FileManagerProtocol
   
-  init() {
+  init(fileManager: FileManagerProtocol = FileManager.default) {
+    self.fileManager = fileManager
     encoder.outputFormat = .binary
   }
   
-  func fetchMovies(usingSearchString searchString: String) async -> [Movie]? {
+  func fetchMovies(usingSearchString searchString: String, completion: @escaping MovieDataStoreResultCompletion) {
     
     guard let fileURL = getFileURL(usingSearchString: searchString) else {
       Log.error(TAG, "error: unable to get file URL")
-      return nil
+      completion(.failure(.fileURLCreationError))
     }
     
     do {
-      if FileManager.default.fileExists(atPath: fileURL.path) == false {
-        print("No file stored for search string - \(searchString)")
-        return nil
+      if self.fileManager.fileExists(atPath: fileURL.path) == false {
+        Log.verbose(TAG, "No file stored for search string")
+        completion(.failure(.noStoredData))
+        return
       }
       let savedData = try Data(contentsOf: fileURL)
       let savedResponse

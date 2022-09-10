@@ -12,7 +12,7 @@ enum MovieDataFetcherError : Error {
   case networkError
 }
 
-typealias MovieDataFetchResultCompletion = (Result<Movie, MovieDataFetcherError>) -> Void
+typealias MovieDataFetchResultCompletion = (Result<Response, MovieDataFetcherError>) -> Void
 
 protocol MovieDataFetcherProtocol {
   func fetchMovies(usingSearchString searchString: String, completion: @escaping MovieDataFetchResultCompletion)

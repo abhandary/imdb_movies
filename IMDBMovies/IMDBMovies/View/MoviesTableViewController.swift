@@ -16,10 +16,12 @@ private let TAG = "MoviesTableViewController"
   @Published var keyStroke: String = ""
   var cancellables: Set<AnyCancellable> = []
   
-  let searchBar: UISearchBar!
-  let tableView: UITableView!
-  let viewModel: MoviesViewModel!
-  let assetStore: AssetStore!
+  let searchBar: UISearchBar
+  let tableView: UITableView
+  let viewModel: MoviesViewModel
+  let assetStore: AssetStore
+  
+  @MainActor var diffableDataSource: UITableViewDiffableDataSource<MoviesTableSection, Movie.ID>?
   
   init(viewModel: MoviesViewModel, assetStore: AssetStore) {
     self.viewModel = viewModel
@@ -115,7 +117,7 @@ extension MoviesTableViewController
   func setupTableViewDataSource() {
     
     // diffable datasource
-    viewModel.diffableDataSource
+    self.diffableDataSource
     = UITableViewDiffableDataSource<MoviesTableSection, Movie.ID>(tableView: tableView) {
         (tableView, indexPath, movieID) -> UITableViewCell? in
       let movie = self.viewModel.fetchByID(id: movieID)
@@ -134,25 +136,17 @@ extension MoviesTableViewController
     }
   }
   
-  private func setup(_ cell: MovieTableViewAltCell, withMovie movie: Movie) {
-    let movieImageURL = URL(string: movie.image)
-    if movieImageURL == nil {
-      Log.error(TAG, "couldn't get URL for movie url string - \(movie.image)")
-      // non fatal error, continue with showing a placeholder
-    }
-    let asset = self.assetStore.fetchAsset(url: movieImageURL)
-    cell.titleLabel.text = movie.title
-    cell.descriptionLabel.text = movie.resultDescription
-    if asset.state == .placeholder {
-      cell.movieImage.image = UIImage(named: "Placeholder")
-      self.assetStore.downloadAsset(url: movieImageURL) { [weak self] asset in
-        // reconfigure the item instead of the cell directly as the cell may
-        // have been re-used at this point
-        self?.viewModel.setMovieItemNeedsUpdate(id: movie.id)
-      }
-    } else if let imageData = asset.data {
-      cell.movieImage.image = UIImage(data: imageData)
-    }
+  func setupMoviesObserver()
+  {
+    viewModel.$movies
+      .receive(on: RunLoop.main)
+      .sink { (movies) in
+        var snapshot = NSDiffableDataSourceSnapshot<MoviesTableSection, Movie.ID>()
+        snapshot.appendSections([.main])
+        let movieIDs = movies.map { $0.id }
+        snapshot.appendItems(movieIDs, toSection:.main)
+        self.diffableDataSource?.apply(snapshot, animatingDifferences: true)
+      }.store(in: &cancellables)
   }
 }
 

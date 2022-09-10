@@ -23,6 +23,11 @@ final class MovieRepository : MovieRepositoryProtocol {
 
     Log.verbose(TAG,"running query for movies using search string - \(searchString)")
     
+    fetchWithDataFetcherMovies(usingSearchString: searchString, completion: completion)
+  }
+  
+  private func fetchWithDataFetcherMovies(usingSearchString searchString: String,
+                                          completion: @escaping MovieRepoResultCompletion) {
     // async fetch from network and update and notify
     dataFetcher.fetchMovies(usingSearchString: searchString) { [weak self] result in
       guard let self = self else {
@@ -32,7 +37,7 @@ final class MovieRepository : MovieRepositoryProtocol {
       }
       switch (result) {
       case .success(let response):
-        completion(.success(response))
+        completion(.success(response.movies))
       case .failure(let error):
         Log.error(TAG, error)
         completion(.failure(self.map(networkError: error)))

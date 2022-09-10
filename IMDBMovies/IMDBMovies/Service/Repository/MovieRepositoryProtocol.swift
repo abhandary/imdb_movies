@@ -13,7 +13,7 @@ enum MovieRepositoryError: Error {
   case decodingError
 }
 
-typealias  MovieRepoResultCompletion = (Result<Movie, MovieRepositoryError>) -> Void
+typealias  MovieRepoResultCompletion = (Result<[Movie], MovieRepositoryError>) -> Void
 
 protocol MovieRepositoryProtocol {
   func fetchMovies(usingSearchString searchString: String, completion: @escaping MovieRepoResultCompletion)
