@@ -44,7 +44,7 @@ extension URLSession : NetworkSessionProtocol {
     loadData(from: request, completion: completion)
   }
   
-  func loadData(from urlRequest: URLRequest, completion: NetworkCompletion?) {
+  public func loadData(from urlRequest: URLRequest, completion: NetworkCompletion?) {
     self.dataTask(with: urlRequest) { data, urlResponse, error in
       if let error = error {
         Log.error("got a network error - \(error)")

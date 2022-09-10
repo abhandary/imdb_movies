@@ -15,7 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
     window = UIWindow(frame: UIScreen.main.bounds)
-    let viewModel = MoviesViewModel(networkLoader: NetworkLoader(), dataStorage: DataStore())
+    let repo = MovieRepository(dataFetcher: MovieDataFetcher())
+    let viewModel = MoviesViewModel(repository: repo)
     let tableViewController = MoviesTableViewController(viewModel: viewModel, assetStore: AssetStore())
     let navController =  ListNavigationController()
     navController.viewControllers = [tableViewController]

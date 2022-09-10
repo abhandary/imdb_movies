@@ -129,7 +129,7 @@
 		4E61AB2A286F756700C24248 = {
 			isa = PBXGroup;
 			children = (
-				4E61AB35286F756700C24248 /* IMDBMovies */,
+				4E61AB35286F756700C24248 /* ReqRes */,
 				4E61AB4C286F756900C24248 /* IMDBMoviesTests */,
 				4E61AB56286F756900C24248 /* IMDBMoviesUITests */,
 				4E61AB34286F756700C24248 /* Products */,
@@ -146,7 +146,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4E61AB35286F756700C24248 /* IMDBMovies */ = {
+		4E61AB35286F756700C24248 /* ReqRes */ = {
 			isa = PBXGroup;
 			children = (
 				4E61AB842871128000C24248 /* Utils */,
@@ -159,7 +159,7 @@
 				4E61AB41286F756800C24248 /* LaunchScreen.storyboard */,
 				4E61AB44286F756800C24248 /* Info.plist */,
 			);
-			path = IMDBMovies;
+			path = ReqRes;
 			sourceTree = "<group>";
 		};
 		4E61AB4C286F756900C24248 /* IMDBMoviesTests */ = {
@@ -627,7 +627,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = akshayb.ReqRes;
+				PRODUCT_BUNDLE_IDENTIFIER = akshayb.IMDBMovies;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -654,7 +654,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = akshayb.ReqRes;
+				PRODUCT_BUNDLE_IDENTIFIER = akshayb.IMDBMovies;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
